@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Watch</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+        *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    margin-left: 100px;
+}
+.icon img{
+    display: inline-block;
+    height: 150px;
+}
+    </style>
+</head>
+<body>
+    <div id="stopwatch">
+        <h1 id="showTime">00:00:00</h1>
+        <div class="icon">
+            <img src="img/stop.png" onclick="stopWatch()">
+            <img src="img/play.png" onclick="startWatch()">
+            <img src="img/reset.png" onclick="resertWatch()">
+        </div>
+    </div>
+
+    <script>
+
+        let[second , min , hours] = [0 , 0 , 0];
+        let DisplayTime = document.getElementById("showTime");
+        let timer = null;
+
+        function stopwatch(){
+            second++;
+            if(second == 60){
+                second = 0;
+                min++;
+                if(min == 60){
+                    min = 0;
+                    hours++;
+                }
+            }
+            let h = hours < 10 ? "0" + hours : hours;
+            let m = min < 10 ? "0" + min : min;
+            let s = second < 10 ? "0" + second : second;
+            DisplayTime.innerHTML = h + ":" + m + ":" + s;
+        }
+
+        function startWatch(){
+            if(timer !== null){
+                clearInterval(timer);
+            }
+            timer = setInterval(stopwatch, 1000)
+        }
+
+        function stopWatch(){
+            clearInterval(timer)
+        }
+
+        function resertWatch(){
+            clearInterval(timer);
+            [second , min , hours] = [0 , 0 , 0];
+            DisplayTime.innerHTML = "00:00:00";
+        }
+    </script>
+</body>
+</html>
